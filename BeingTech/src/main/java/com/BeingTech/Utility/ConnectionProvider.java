@@ -21,7 +21,7 @@ public class ConnectionProvider {
 	}
 
 	public static Connection getConnection() throws SQLException, IOException {
-		FileInputStream fis = new FileInputStream("");
+		FileInputStream fis = new FileInputStream("C:\\Users\\LENOVO\\git\\BeignTech-Blog-Application\\BeingTech\\Application.properties");
 		Properties properties = new Properties();
 		properties.load(fis);
 		//System.out.println(properties.getProperty("url"));
