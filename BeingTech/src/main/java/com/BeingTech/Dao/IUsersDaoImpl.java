@@ -2,6 +2,7 @@ package com.BeingTech.Dao;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -20,7 +21,7 @@ public class IUsersDaoImpl implements IUsersDao {
 			conn = ConnectionProvider.getConnection();
 			if (conn != null) {
 				String insertQuery = "INSERT INTO `user` (`Name`, `Email`, `pazzword`, `Gender`, `rDate`) VALUES (?, ?, ?, ?, ?)";
-			    ps = conn.prepareStatement(insertQuery);
+				ps = conn.prepareStatement(insertQuery);
 			}
 			if (ps != null) {
 				// Set parameters
@@ -28,20 +29,30 @@ public class IUsersDaoImpl implements IUsersDao {
 				ps.setString(2, user.getEmail());
 				ps.setString(3, user.getPazzword());
 				ps.setString(4, user.getGender());
-				ps.setDate(5, new java.sql.Date(user.getrDate().getTime())); // Convert Date to SQL Date
+				// ps.setDate(5, new java.sql.Date(user.getrDate().getTime())); // Convert Date
+				// to SQL Date
+
+				// Check if rDate is null
+				if (user.getrDate() != null) {
+					ps.setDate(5, user.getrDate());
+				} else {
+					// Set the date to the current date if rDate is null, or use null if that's the
+					// desired behavior
+					ps.setDate(5, new Date(System.currentTimeMillis())); // Sets to current date
+				}
 				int rowAffected = ps.executeUpdate();
-				if(rowAffected>0)
+				if (rowAffected > 0)
 					flage = true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
 				ConnectionProvider.cleanUp(conn, ps, null);
 			} catch (SQLException e) {
-				System.out.println("save user db close issue"+e.getMessage());
+				System.out.println("save user db close issue" + e.getMessage());
 				e.printStackTrace();
 			}
 		}

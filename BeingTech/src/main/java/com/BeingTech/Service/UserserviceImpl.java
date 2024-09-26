@@ -6,30 +6,33 @@ import com.BeingTech.Dto.UsersDto;
 
 public class UserserviceImpl implements IUserservice {
 
-	private IUsersDao users;
-	@Override
-	public boolean saveUser(UsersDto user) {
-		users = UserDaoFactory.getUsersDao();
-		return users.saveUser(user);
-	}
+    private IUsersDao users;
 
-	@Override
-	public UsersDto getUserByEmailAndPassword(String email, String password) {
-		users = UserDaoFactory.getUsersDao();
-		return users.getUserByEmailAndPassword(email, password);
-	}
+    // Constructor to initialize IUsersDao
+    public UserserviceImpl() {
+        this.users = UserDaoFactory.getUsersDao();
+    }
 
-	@Override
-	public boolean updateUser(UsersDto user) {
-		users = UserDaoFactory.getUsersDao();
-		return users.updateUser(user);
-	}
+    @Override
+    public boolean saveUser(UsersDto user) {
+        if (user.getrDate() == null) {
+            user.setrDate(new java.sql.Date(System.currentTimeMillis()));  // Set the current date if not provided
+        }
+        return users.saveUser(user);
+    }
 
-	@Override
-	public UsersDto getUserByUserId(int userId) {
-		users = UserDaoFactory.getUsersDao();
-		return users.getUserByUserId(userId);
-		
-	}
+    @Override
+    public UsersDto getUserByEmailAndPassword(String email, String password) {
+        return users.getUserByEmailAndPassword(email, password);
+    }
 
+    @Override
+    public boolean updateUser(UsersDto user) {
+        return users.updateUser(user);
+    }
+
+    @Override
+    public UsersDto getUserByUserId(int userId) {
+        return users.getUserByUserId(userId);
+    }
 }
