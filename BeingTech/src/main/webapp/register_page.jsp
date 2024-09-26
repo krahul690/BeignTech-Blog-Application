@@ -76,7 +76,7 @@
 <div class="register-container">
     <h1 class="header-title">BeingTech</h1> <!-- Website Name -->
     <h3 class="text-center">Register</h3>
-    <form>
+    <form action="RegisterUser" method="Post">
         <div class="mb-3">
             <label for="username" class="form-label">
                 <i class="fa fa-user icon"></i>Username
