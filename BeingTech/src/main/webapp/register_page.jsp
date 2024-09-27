@@ -10,6 +10,14 @@
 	rel="stylesheet">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- sweet alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
 <style>
 body {
 	background-color: #f2f2f2; /* Light grey background */
@@ -124,7 +132,14 @@ body {
 						conditions</a>
 				</label>
 			</div>
-			<button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+			<div id="loader"
+				style="display:none; text-align: center; margin-bottom: 10px;">
+				<i class="fa fa-spinner fa-spin fa-2x"></i><br> <span><b>please
+						wait...</b></span>
+			</div>
+			<div id="submit-btn" class="d-flex justify-content-center">
+				<button type="submit" class="btn btn-primary btn-lg btn-block">Register</button>
+			</div>
 		</form>
 		<a href="login_page.jsp" class="login-link">Already have an
 			account? Log in</a>
@@ -166,37 +181,64 @@ body {
 	<!-- Clippy Effect Below Footer -->
 	<div class="wave"></div>
 	<!-- Wave effect -->
+<script>
+    $(document).ready(function() {
+        $('#register').on('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting the traditional way
+            
+            // Create a FormData object with the form element
+            let form = new FormData(this);
+            $("#submit-btn").hide(); // Hides the submit button
+            // Show the loader after a short delay
+            setTimeout(function() {
+                $("#loader").show(); // Shows the loader
+            }, 900); // Delay of 500 milliseconds (0./ seconds)
+            
+            
+            // Send the form data to the servlet using AJAX
+            $.ajax({
+                url: "RegisterUser", // URL to the servlet
+                type: 'POST',
+                data: form, // FormData object
+                processData: false, // Prevent jQuery from processing the data
+                contentType: false, // Prevent jQuery from setting Content-Type header
+                success: function(data, textStatus, jqXHR) {
+                	console.log("Response data:", data);
+                	$("#submit-btn").show(); // Show the submit button again
+                    $("#loader").hide(); // Hide the loader
+
+                    // Check for success response
+                    if (data.trim() === 'done') {
+                        Swal.fire("Registered successfully.. We are going to redirect to login page")
+                            .then((value) => {
+                                window.location = "login_page.jsp"; // Redirect to login page
+                            });
+                    } else {
+                        // Show error message returned from the server
+                        Swal.fire(data);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $("#submit-btn").show(); // Show the submit button again
+                    $("#loader").hide(); // Hide the loader
+                    
+                    // Show a generic error message
+                    Swal.fire("Something went wrong.. try again");
+                }
+            });
+        });
+    });
+</script>
+
+
+	
 
 	<!-- Bootstrap JS -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#register').on('submit', function(event) {
-				event.preventDefault(); // Prevent form from submitting the traditional way
 
-				// Create a FormData object with the form element
-				let form = new FormData(this);
-
-				// Send the form data to the servlet using AJAX
-				$.ajax({
-					url : "RegisterUser", // URL to the servlet
-					type : 'POST',
-					data : form, // FormData object
-					processData : false, // Prevent jQuery from processing the data
-					contentType : false, // Prevent jQuery from setting Content-Type header
-					success : function(data, textStatus, jqXHR) {
-						console.log(data); // Log the server response
-					},
-					error : function(jqXHR, textStatus, errorThrown) {
-						console.log(jqXHR); // Log the error details
-					}
-				});
-			});
-		});
-	</script>
 
 </body>
 </html>
