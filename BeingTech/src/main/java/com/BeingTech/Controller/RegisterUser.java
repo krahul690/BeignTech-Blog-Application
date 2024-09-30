@@ -30,7 +30,7 @@ public class RegisterUser extends HttpServlet {
 		String email=request.getParameter("email");
 		String password=request.getParameter("password");
 		String gender=request.getParameter("gender");
-		String terms=request.getParameter("terms");
+//		String terms=request.getParameter("terms");
 		   System.out.println("Email: " + email); 
 		//
 		UsersDto udto = new UsersDto();
