@@ -74,13 +74,13 @@
             <label for="email" class="form-label">
                 <i class="fa fa-envelope icon"></i>Email address
             </label>
-            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email" required>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">
                 <i class="fa fa-lock icon"></i>Password
             </label>
-            <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password" required>
         </div>
         <div class="mb-3 form-check">
             <input type="radio" class="form-check-input" id="checkMeOut" name="checkMeOut" value="yes">
