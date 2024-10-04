@@ -12,8 +12,26 @@ public class UsersDto implements Serializable {
     private String pazzword;
     private String gender;
     private Date rDate;
+    private String profile;
 
-    // Default Constructor
+    @Override
+	public String toString() {
+		return "UsersDto [id=" + id + ", name=" + name + ", email=" + email + ", pazzword=" + pazzword + ", gender="
+				+ gender + ", rDate=" + rDate + ", profile=" + profile + "]";
+	}
+
+	public UsersDto(int id, String name, String email, String pazzword, String gender, Date rDate, String profile) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.pazzword = pazzword;
+		this.gender = gender;
+		this.rDate = rDate;
+		this.profile = profile;
+	}
+
+	// Default Constructor
     public UsersDto() {
     }
 
@@ -76,10 +94,12 @@ public class UsersDto implements Serializable {
         this.rDate = rDate;
     }
 
-    // toString method
-    @Override
-    public String toString() {
-        return "UserDTO [id=" + id + ", name=" + name + ", email=" + email + ", pazzword=" + pazzword 
-                + ", gender=" + gender + ", rDate=" + rDate + "]";
-    }
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 }

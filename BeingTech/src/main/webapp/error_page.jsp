@@ -67,7 +67,7 @@
         <div class="error-description">
             We're sorry for the inconvenience. Please try again later or contact support.
         </div>
-        <a href="/">Go Back to Home</a>
+        <a href="index.jsp">Go Back to Home</a>
         <div class="error-details">
             <% if (exception != null) { %>
                 <p><b>Error Details:</b> <%= exception.getMessage() %></p>

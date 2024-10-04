@@ -14,6 +14,7 @@ public class IUsersDaoImpl implements IUsersDao {
 	Connection conn = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
+	
 	@Override
 	public boolean saveUser(UsersDto user) {
 		boolean flage = false;
@@ -86,6 +87,7 @@ public class IUsersDaoImpl implements IUsersDao {
 	                user.setPazzword(rs.getString("pazzword"));
 	                user.setGender(rs.getString("Gender"));
 	                user.setrDate(rs.getDate("rDate"));
+	                user.setProfile(rs.getString("profile"));
 	            }
 	        }
 	    } catch (SQLException e) {
